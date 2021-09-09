@@ -1,5 +1,3 @@
-# require 'piece'
-
 ##
 # Represents a Bishop
 class Bishop < Piece
