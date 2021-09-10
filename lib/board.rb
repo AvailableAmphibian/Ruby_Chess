@@ -1,5 +1,5 @@
-require 'modules/moving_in_diagonals'
-# require 'modules/moving_in_line'
+require 'modules/moving_in_diagonal'
+require 'modules/moving_in_line'
 require 'pieces/piece'
 require 'pieces/rook'
 require 'pieces/knight'
