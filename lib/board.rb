@@ -26,6 +26,12 @@ class Board
     end
   end
 
+  # @param [Array] position
+  # @return [Piece]
+  def at(position)
+    @board[position[0]][position[1]]
+  end
+
   def to_s
     line_separator = '— — — — — — — — — — — — — — — — — '
     col_separator = '| '
