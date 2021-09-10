@@ -14,19 +14,33 @@ class Pawn < Piece
   # @param [Array] other_place
   # @param [Board] board
   def in_range?(other_place, board)
-    distance = (@position[0] - other_place[0]).abs
+    distance = other_place[0] - @position[0]
+
+    return false unless correct? distance
+
+    abs_dist = distance.abs
+
     # Moving to the front
-    if other_place[1] == @position[1]
-      return (@at_initial && distance == 2 && board.at([@position[0] + 1, @position[1]]).empty?) || distance == 1
-    end
+    return going_to_same_column?(abs_dist, board) if other_place[1] == @position[1]
 
     # Trying to attack
-    verify_attack_range(distance, board.at(other_place))
+    return false if abs_dist != 1
+
+    verify_attack_range?(other_place[1] - @position[1], board.at(other_place))
   end
 
-  def verify_attack_range(column, other_place)
-    return false unless column == 1
+  def going_to_same_column?(abs_dist, board)
+    return true if abs_dist == 1
 
+    between = color == 'w' ? -1 : 1
+    (@at_initial && abs_dist == 2 && board.at([@position[0] + between, @position[1]]).empty?)
+  end
+
+  def correct?(distance)
+    (distance.negative? && color == 'w') || (distance.positive? && color == 'b')
+  end
+
+  def verify_attack_range?(column, other_place)
     can_go_left = (@position[1] - 1).positive?
     can_go_right = (@position[1] + 1) < 8
 
