@@ -11,6 +11,7 @@ class Pawn < Piece
 
   attr_writer :at_initial
 
+  ##
   # @param [Array] other_place
   # @param [Board] board
   def in_range?(other_place, board)
@@ -28,6 +29,23 @@ class Pawn < Piece
 
     verify_attack_range?(other_place[1] - @position[1], board.at(other_place))
   end
+
+  ##
+  # @param [Array] other
+  # @param [Board] board
+  def move(other, board)
+    super other, board
+    @at_initial = false
+  end
+
+  def to_s
+    return BLACK if @color == 'b'
+    return WHITE if @color == 'w'
+
+    raise 'Not a possible color'
+  end
+
+  private
 
   def going_to_same_column?(abs_dist, board)
     return true if abs_dist == 1
@@ -50,18 +68,4 @@ class Pawn < Piece
     column == 1 && can_go_right
   end
 
-  ##
-  # @param [Array] other
-  # @param [Board] board
-  def move(other, board)
-    super other, board
-    @at_initial = false
-  end
-
-  def to_s
-    return BLACK if @color == 'b'
-    return WHITE if @color == 'w'
-
-    raise 'Not a possible color'
-  end
 end

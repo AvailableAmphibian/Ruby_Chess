@@ -1,3 +1,5 @@
+require 'modules/moving_in_diagonals'
+# require 'modules/moving_in_line'
 require 'pieces/piece'
 require 'pieces/rook'
 require 'pieces/knight'
@@ -88,9 +90,9 @@ class Board
     line
   end
 
-  # @param [Piece] piece
+  # @param [Array] piece
   def remove(piece)
-    @board[piece.position[0]][piece.position[1]] = Piece.create_empty([piece.position[0], piece.position[1]])
+    @board[piece[0]][piece[1]] = Piece.create_empty([piece[0], piece[1]])
   end
 
   # @param [Piece] piece

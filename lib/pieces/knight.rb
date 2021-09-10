@@ -1,5 +1,3 @@
-# require 'piece'
-
 ##
 # Represents a Knight
 class Knight < Piece

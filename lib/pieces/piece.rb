@@ -1,6 +1,5 @@
 Dir['../errors/*.rb'].sort.each { |file| require file }
 
-
 ##
 # Represents a casual chess piece
 class Piece
@@ -37,6 +36,7 @@ class Piece
   # @param [Array] other_position
   # @param [Board] board
   def move(other_position, board)
+    # TODO: Verify if valid other_position, if not, raise NotValidPositionError
     move = can_move(other_position, board)
     # Exit to retry if that's an illegal move
     raise OccupiedError if move == :occupied_by_ally
@@ -44,7 +44,7 @@ class Piece
 
     board.remove other_position if move == :occupied_by_opponent
 
-    board.move_to self, other_position.position
+    board.move_to(self, other_position.position)
     @position = other_position.position
   end
 
