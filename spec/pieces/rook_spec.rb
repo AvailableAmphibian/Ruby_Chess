@@ -13,7 +13,7 @@ describe Rook do
       expect(test_rook.in_range?([0, 2], board)).to eql(true)
     end
 
-    it "2) Going  right" do
+    it "2) Going right" do
       test_rook = Rook.new([2, 2], "b")
       board = Board.new([test_rook])
       expect(test_rook.in_range?([2, 4], board)).to eql(true)
@@ -31,5 +31,5 @@ describe Rook do
       end
   end
 
-  # -- End of Testing for #in_range? --
+  # -- End of 
 end
