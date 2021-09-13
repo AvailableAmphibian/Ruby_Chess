@@ -13,18 +13,18 @@ class Board
   LINE_LETTERS = %w[A B C D E F G H].freeze
 
   # @param [Array] testing_set
-  def init_testing_board(testing_set)
-    5.times { |it| @board << Board.init_empty_line(it, 5) }
+  def init_testing_board(testing_set, size)
+    size.times { |it| @board << Board.init_empty_line(it, size) }
     testing_set.each { |testing_piece| @board[testing_piece.position[0]][testing_piece.position[1]] = testing_piece }
   end
 
   # @param [Array] testing_set
-  def initialize(testing_set = nil)
+  def initialize(testing_set = nil, testing_board_size = 5)
     @board = []
     if testing_set.nil?
       init_board
     else
-      init_testing_board testing_set
+      init_testing_board(testing_set, testing_board_size)
     end
   end
 

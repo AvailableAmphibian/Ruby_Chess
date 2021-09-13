@@ -5,6 +5,18 @@ class Rook < Piece
   BLACK = '♜'.freeze
   WHITE = '♖'.freeze
 
+  def initialize(position, color = nil)
+    super(position, color)
+    @at_initial = true
+  end
+
+  def move(other, board)
+    super other, board
+    @at_initial = false 
+  end
+
+  attr_accessor :at_initial
+
   ##
   # @param [Array] other_position
   # @param [Board] board

@@ -1,4 +1,3 @@
-# TODO: add spec
 require "./lib/board.rb"
 require "./lib/modules/moving_in_diagonal.rb"
 require "./lib/pieces/piece.rb"
