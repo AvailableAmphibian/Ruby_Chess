@@ -3,8 +3,8 @@
 ##
 # Represents a King
 class King < Piece
-  BLACK = '♚'.freeze
-  WHITE = '♔'.freeze
+  BLACK = "♚".freeze
+  WHITE = "♔".freeze
 
   ALLOWED = {
     up_left: [-1, -1],
@@ -14,11 +14,11 @@ class King < Piece
     down_right: [1, 1],
     down: [1, 0],
     down_left: [1, -1],
-    left: [0, -1]
+    left: [0, -1],
   }.freeze
 
-  KINGSIDE = 2.freeze
-  QUEENSIDE = 6.freeze
+  QUEENSIDE = 2.freeze
+  KINGSIDE = 6.freeze
 
   def initialize(position, color = nil)
     super(position, color)
@@ -29,8 +29,21 @@ class King < Piece
 
   def move(other, board)
     super other, board
-    @at_initial = false 
-    # TODO: Add castling handlement
+    @at_initial = false
+
+    move_rook(board, 7, 5) if other[1] == KINGSIDE
+    move_rook(board, 0, 3) if other[1] == QUEENSIDE
+  end
+
+  ##
+  # @param [Board] board
+  def move_rook(board, start, to)
+    rook = board.at([@position[0], start])
+    return unless rook.at_initial
+
+    board.move_to(rook, [@position[0], to])
+    rook.position = [@position[0], to]
+    rook.at_initial = false
   end
 
   ##
@@ -51,26 +64,25 @@ class King < Piece
     return false unless @position[0] == other_position[0]
 
     return empty_king?(board) if other_position[1] == KINGSIDE
-
     other_position[1] == QUEENSIDE ? empty_queen?(board) : false
   end
 
   ##
   # @param [Board] board
   def empty_king?(board)
-    rook_position = [] << @position[0] << 0
+    rook_position = [] << @position[0] << 7
     rook = board.at(rook_position)
 
-    empty_to_rook?(rook, board, -1)
+    empty_to_rook?(rook, board, 1)
   end
 
   ##
   # @param [Board] board
   def empty_queen?(board)
-    rook_position = [] << @position[0] << 7
+    rook_position = [] << @position[0] << 0
     rook = board.at(rook_position)
 
-    empty_to_rook?(rook, board, 1)
+    empty_to_rook?(rook, board, -1)
   end
 
   ##
@@ -79,10 +91,9 @@ class King < Piece
   # @param [Integer] offset
   def empty_to_rook?(rook, board, offset)
     return false unless rook.is_a?(Rook) && rook.at_initial
-    return false if opponent?(rook)
 
-    current = @position
-    until current == rook.position do
+    current = [] << @position[0] << @position[1]
+    until current == rook.position
       current[1] += offset
       return false unless rook.position == current || board.at(current).empty?
     end
@@ -90,9 +101,9 @@ class King < Piece
   end
 
   def to_s
-    return BLACK if @color == 'b'
-    return WHITE if @color == 'w'
+    return BLACK if @color == "b"
+    return WHITE if @color == "w"
 
-    raise 'Not a possible color'
+    raise "Not a possible color"
   end
 end

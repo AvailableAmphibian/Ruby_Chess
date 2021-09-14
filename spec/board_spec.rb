@@ -17,9 +17,7 @@ describe Board do
 
       expect(back_line).to eql(expected)
     end
-  end
-
-  describe '#init_back_line (white)' do
+  
     it 'creates a back line for chess pieces' do
       back_line = Board.init_back_line(7, 'w')
 
@@ -35,6 +33,7 @@ describe Board do
       expect(back_line).to eql(expected)
     end
   end
+
   describe '#init_pawn_line (white)' do
     it 'creates a pawn line for chess pieces' do
       back_line = Board.init_pawn_line(6, 'w')

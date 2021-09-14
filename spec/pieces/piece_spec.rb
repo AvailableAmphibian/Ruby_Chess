@@ -27,6 +27,28 @@ describe Pawn do
     end
 
     # TODO: add checks for allowed moves
+    it 'Allowed move (tried with pawn)' do
+      test_pawn = Pawn.new([1, 2], 'b')
+      board = Board.new([test_pawn])
+      test_pawn.move([2, 2], board)
+      
+      moved_pawn = test_pawn
+      test_board = Board.new([moved_pawn])
+
+      expect(board.to_s).to eql(test_board.to_s)
+    end
+  
+    it 'Allowed attacking move (tried with pawn)' do
+      test_pawn = Pawn.new([1, 2], 'b')
+      attacked_pawn = Pawn.new([2,3], 'w')
+      board = Board.new([test_pawn, attacked_pawn])
+      test_pawn.move([2, 3], board)
+      
+      moved_pawn = test_pawn
+      test_board = Board.new([moved_pawn])
+
+      expect(board.to_s).to eql(test_board.to_s)
+    end
   end
 
   # -- End of Testing for #move --

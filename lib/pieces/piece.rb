@@ -3,8 +3,8 @@ Dir['../errors/*.rb'].sort.each { |file| require file }
 ##
 # Represents a casual chess piece
 class Piece
-  attr_reader :position, :color
-
+  attr_reader :color
+  attr_accessor :position
 
   CAN_MOVE_RETURN_CODES = {
     occupied_by_ally: -1,
@@ -37,15 +37,14 @@ class Piece
   # @param [Board] board
   def move(other_position, board)
     # TODO: Verify if valid other_position, if not, raise NotValidPositionError
-    move = can_move(other_position, board)
+    move = can_move?(other_position, board)
     # Exit to retry if that's an illegal move
     raise OccupiedError if move == :occupied_by_ally
     raise NotInRangeError if move == :not_in_range
 
     board.remove other_position if move == :occupied_by_opponent
-
-    board.move_to(self, other_position.position)
-    @position = other_position.position
+    board.move_to(self, other_position)
+    @position = other_position
   end
 
   # @param [Array] _other_position
@@ -73,9 +72,9 @@ class Piece
   # @return [Symbol] not_in_range (0) if the other place isn't in this piece range or the other place is occupied by an ally
   # @return [Symbol] 1 if the other place is empty
   # @return [Symbol] 2 if the other place is occupied by an opponent piece
-  def can_move(other_place, board)
+  def can_move?(other_place, board)
     return :not_in_range unless in_range?(other_place, board)
-    return :empty if other_place.empty?
+    return :empty if board.at(other_place).empty?
 
     opponent?(board.at(other_place)) ? :occupied_by_opponent : :occupied_by_ally
   end
