@@ -1,10 +1,4 @@
-require './lib/board'
-Dir['./lib/pieces/*.rb'].sort.each { |file| require file }
-Dir['./lib/errors/*.rb'].sort.each { |file| require file }
-
 describe Pawn do
-
-  # -- Testing for #in_range? --
   describe '#in_range?' do
     it 'Going to the next place same line' do
       test_pawn = Pawn.new([1, 2], 'b')
@@ -90,6 +84,4 @@ describe Pawn do
       expect(test_pawn.in_range?([1, 2], board)).to eql(false)
     end
   end
-
-  # -- End of Testing for #in_range? --
 end

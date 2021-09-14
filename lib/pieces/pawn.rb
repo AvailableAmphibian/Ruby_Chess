@@ -9,6 +9,8 @@ class Pawn < Piece
     @at_initial = true
   end
 
+  # TODO: Add promotion
+
   attr_writer :at_initial
 
   ##

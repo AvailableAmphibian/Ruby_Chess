@@ -12,7 +12,7 @@ class Rook < Piece
 
   def move(other, board)
     super other, board
-    @at_initial = false 
+    @at_initial = false
   end
 
   attr_accessor :at_initial
@@ -23,7 +23,6 @@ class Rook < Piece
   def in_range?(other_position, board)
     check_lines?(self, other_position, board)
   end
-
 
   def to_s
     return BLACK if @color == 'b'

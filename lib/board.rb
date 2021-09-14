@@ -12,13 +12,10 @@ require 'pieces/king'
 class Board
   LINE_LETTERS = %w[A B C D E F G H].freeze
 
-  # @param [Array] testing_set
-  def init_testing_board(testing_set, size)
-    size.times { |it| @board << Board.init_empty_line(it, size) }
-    testing_set.each { |testing_piece| @board[testing_piece.position[0]][testing_piece.position[1]] = testing_piece }
-  end
-
-  # @param [Array] testing_set
+  ##
+  # Classic constructor, add arguments for tests
+  # @param [Array] testing_set pieces used (tests)
+  # @param [Integer] testing_board_size board length (tests)
   def initialize(testing_set = nil, testing_board_size = 5)
     @board = []
     if testing_set.nil?
@@ -28,8 +25,18 @@ class Board
     end
   end
 
-  # @param [Array] position
-  # @return [Piece]
+  ##
+  # @param [Array] testing_set pieces used for this test
+  # @param [Integer] size board length for this test
+  def init_testing_board(testing_set, size)
+    size.times { |it| @board << Board.init_empty_line(it, size) }
+    testing_set.each { |testing_piece| @board[testing_piece.position[0]][testing_piece.position[1]] = testing_piece }
+  end
+
+  ##
+  # To know which piece is at a given position
+  # @param [Array] position a position to retrieve
+  # @return [Piece] the piece at this position
   def at(position)
     @board[position[0]][position[1]]
   end
@@ -92,13 +99,13 @@ class Board
 
   # @param [Array] piece
   def remove(piece)
-    @board[piece[0]][piece[1]] = Piece.create_empty([piece[0], piece[1]])
+    @board[piece[0]][piece[1]] = Piece.new([piece[0], piece[1]])
   end
 
   # @param [Piece] piece
   # @param [Array] other_position
   def move_to(piece, other_position)
     @board[other_position[0]][other_position[1]] = piece
-    @board[piece.position[0]][piece.position[1]] = Piece.create_empty([piece.position[0], piece.position[1]])
+    @board[piece.position[0]][piece.position[1]] = Piece.new([piece.position[0], piece.position[1]])
   end
 end

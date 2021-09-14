@@ -1,10 +1,10 @@
 # require 'piece'
 
 ##
-# Represents a King
+# Represents a King in chess
 class King < Piece
-  BLACK = "♚".freeze
-  WHITE = "♔".freeze
+  BLACK = '♚'.freeze
+  WHITE = '♔'.freeze
 
   ALLOWED = {
     up_left: [-1, -1],
@@ -14,11 +14,11 @@ class King < Piece
     down_right: [1, 1],
     down: [1, 0],
     down_left: [1, -1],
-    left: [0, -1],
+    left: [0, -1]
   }.freeze
 
-  QUEENSIDE = 2.freeze
-  KINGSIDE = 6.freeze
+  QUEEN_SIDE = 2
+  KING_SIDE = 6
 
   def initialize(position, color = nil)
     super(position, color)
@@ -31,8 +31,8 @@ class King < Piece
     super other, board
     @at_initial = false
 
-    move_rook(board, 7, 5) if other[1] == KINGSIDE
-    move_rook(board, 0, 3) if other[1] == QUEENSIDE
+    move_rook(board, 7, 5) if other[1] == KING_SIDE
+    move_rook(board, 0, 3) if other[1] == QUEEN_SIDE
   end
 
   ##
@@ -62,9 +62,9 @@ class King < Piece
   def castling?(other_position, board)
     return false unless @at_initial
     return false unless @position[0] == other_position[0]
+    return empty_king?(board) if other_position[1] == KING_SIDE
 
-    return empty_king?(board) if other_position[1] == KINGSIDE
-    other_position[1] == QUEENSIDE ? empty_queen?(board) : false
+    other_position[1] == QUEEN_SIDE ? empty_queen?(board) : false
   end
 
   ##
@@ -101,9 +101,9 @@ class King < Piece
   end
 
   def to_s
-    return BLACK if @color == "b"
-    return WHITE if @color == "w"
+    return BLACK if @color == 'b'
+    return WHITE if @color == 'w'
 
-    raise "Not a possible color"
+    raise 'Not a possible color'
   end
 end

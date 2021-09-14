@@ -1,11 +1,6 @@
-require './lib/board'
-Dir['./lib/pieces/*.rb'].sort.each { |file| require file }
 Dir['./lib/errors/*.rb'].sort.each { |file| require file }
 
 describe Pawn do
-
-  # -- Testing for #move --
-
   describe '#move' do
     it 'Going to a place occupied by an ally' do
       test_pawn = Pawn.new([1, 2], 'b')
@@ -31,25 +26,23 @@ describe Pawn do
       test_pawn = Pawn.new([1, 2], 'b')
       board = Board.new([test_pawn])
       test_pawn.move([2, 2], board)
-      
+
       moved_pawn = test_pawn
       test_board = Board.new([moved_pawn])
 
       expect(board.to_s).to eql(test_board.to_s)
     end
-  
+
     it 'Allowed attacking move (tried with pawn)' do
       test_pawn = Pawn.new([1, 2], 'b')
-      attacked_pawn = Pawn.new([2,3], 'w')
+      attacked_pawn = Pawn.new([2, 3], 'w')
       board = Board.new([test_pawn, attacked_pawn])
       test_pawn.move([2, 3], board)
-      
+
       moved_pawn = test_pawn
       test_board = Board.new([moved_pawn])
 
       expect(board.to_s).to eql(test_board.to_s)
     end
   end
-
-  # -- End of Testing for #move --
 end
