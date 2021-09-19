@@ -24,10 +24,6 @@ class Piece
 
   alias eql? ==
 
-  def self.create_empty(position)
-    Piece.new(position)
-  end
-
   def to_s
     ' '
   end
