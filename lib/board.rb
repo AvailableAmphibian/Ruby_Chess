@@ -58,7 +58,21 @@ class Board
   end
 
   def display
-    puts self
+    line_separator = ' — — — — — — — — — — — — — — — — — —'
+    col_separator = '| '
+    result = ''
+
+    result = "   | A | B | C | D | E | F | G | H |\n"
+    result << line_separator << "\n"
+    @board.each_with_index do |line, index|
+      result << " #{index + 1} "
+      line.each { |piece| result << "#{col_separator}#{piece} " }
+
+      result << col_separator << "\n"
+      result << line_separator << "\n"
+    end
+
+    puts result
   end
 
   def init_board
@@ -107,5 +121,9 @@ class Board
   def move_to(piece, other_position)
     @board[other_position[0]][other_position[1]] = piece
     @board[piece.position[0]][piece.position[1]] = Piece.new([piece.position[0], piece.position[1]])
+  end
+
+  def check_mate?
+    false
   end
 end
